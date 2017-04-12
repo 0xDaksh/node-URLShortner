@@ -1,7 +1,9 @@
 var express = require('express'),
-    router = express.Router(),
+    app = express.Router(),
+    config = require('config'),
     short = require('shortid');
 
+var Url = require('../models/Url.js');
 app.get('/', (req, res) => {
     res.sendFile('../index.html');
 });
@@ -20,6 +22,30 @@ app.post('/create', (req, res) => {
         error: 'not a valid url'
       });
     } else {
-      
+      var newUrl = new Url({
+        id: short.generate(),
+        to: req.body.url
+      }).save((err) => {
+        if(!err) {
+          res.json({
+              url: config.website + '/' + newUrl.id
+          });
+        } else {
+          res.json({
+            error: err
+          })
+        }
+      });
     }
 });
+app.get('/:id', (req, res) => {
+  Url.findOne({id: req.params.id}, (err, url) => {
+    if(!url) {
+      res.redirect('/');
+    } else {
+      res.redirect(url.to);
+    }
+  });
+});
+
+module.exports = app;

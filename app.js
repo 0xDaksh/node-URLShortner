@@ -8,10 +8,12 @@ var express = require('express'),
 // middleware
 app.use(bodyParser.urlencoded({extended: false}));
 // database
+mongoose.Promise = global.Promise;
 mongoose.connect(`mongodb://${config.dbUser}:${config.dbPass}@${config.dbUrl}`);
 // routes
 app.use('/', index);
 
-app.listen(config.port, () => {
-  console.log(`Started running on ${config.port}`);
+let port = process.env.PORT || config.port || 3000;
+app.listen(port, () => {
+  console.log(`Started running on ${port}`);
 });

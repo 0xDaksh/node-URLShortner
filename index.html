@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dak.sh URL Shortener</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse bg-primary">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+    <a class="navbar-brand" href="#">Daksh Miglani</a>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">Blog</a>
+            <a class="nav-item nav-link" href="#">Github</a>
+            <a class="nav-item nav-link" href="#">Twitter</a>
+      </div>
+</div>
+ </nav>
+ <div class="container" style="padding-top: 7%;">
+    <h1 class="text-center">Shorten Links Easily with Dak.sh</h1>
+    <h4 class="text-center">Create Small links for your Customers Ease!</h4>
+    <form>
+      <div class="form-group"><label for="inputSuccess1" class="form-control-label">Enter Link Below.</label>
+      <input type="text" id="inputSuccess1" name="url" class="form-control form-control-success"> <br>
+      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </div>
+  </form>
+  <br>
+  <div class="show"></div>
+ </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+  $('form').submit(function(evt){
+      evt.preventDefault();
+        var formData = {
+          'url': $('input[name=url]').val()
+      };
+      $.ajax({
+          type: 'POST',
+          url: '/create',
+          data: formData,
+          dataType: 'json',
+          encode: true
+      }).done(function(data) {
+          console.log(data);
+          if(data.error) {
+              $('.show').html('<div class="alert alert-danger" role="alert"><strong>Oh snap!</strong> Please use a Valid Url!</div>');
+          } else {
+              $('.show').html('<div class="alert alert-success" role="alert"><strong>Successfully Created! </strong> Here it is - <a href="'+ data.short +'" class="alert-link">' + data.short + '</a>.</div>');
+          }
+      });
+
+  });
+  });
+    </script>
+  </body>
+</html>

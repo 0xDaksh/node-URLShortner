@@ -16,7 +16,9 @@ Licensed Under MIT | (c) to Daksh Miglani (https://dak.sh | @Dakshster)
 
 # How to Use it?
 
-To be written.
+1. Get into the config.js file
+2. Add your Website's URL, Database Pass, Username and URL
+3. npm start
 
 # Bugs
 If you find any bugs, You can submit a pull request!

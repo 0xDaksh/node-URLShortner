@@ -12,4 +12,4 @@ var UrlSchema = new Schema ({
     }
 });
 
-module.exports = mopngoose.model("Url", UrlSchema);
+module.exports = mongoose.model("Url", UrlSchema);
